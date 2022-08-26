@@ -20,6 +20,7 @@ let socket = new WebSocket("ws://192.168.4.1/ws");
 
 socket.onopen = function(e) {
   console.log("[open] Connection established");
+  socket.send("test")
 };
 let prev_time = 0;
 socket.onmessage = function(event) {
@@ -37,6 +38,10 @@ socket.onmessage = function(event) {
     // character.rightThigh.rotation.x = deg_to_rad(parseFloat(jsonResponse["d-alpha"]));
     // character.rightTibia.rotation.x = deg_to_rad(parseFloat(jsonResponse["d-beta"]));
   }
+
+  setTimeout(function() {
+    socket.send("1")
+  }, 25);
 
 
 };
@@ -178,8 +183,8 @@ window.requestAnimationFrame(onAnimationFrameHandler);
 // resize
 const windowResizeHanlder = () => {
   const { innerHeight, innerWidth } = window;
-  renderer.setSize(innerWidth, innerHeight);
-  camera.aspect = innerWidth / innerHeight;
+  renderer.setSize(innerWidth, innerHeight/3*2);
+  camera.aspect = innerWidth / innerHeight/2*3;
   camera.updateProjectionMatrix();
 };
 windowResizeHanlder();
@@ -187,9 +192,35 @@ window.addEventListener('resize', windowResizeHanlder);
 
 // dom
 document.body.style.margin = 0;
-document.body.appendChild( renderer.domElement );
+document.getElementById("scene").appendChild( renderer.domElement );
 
 function deg_to_rad(degrees) {
   var pi = Math.PI;
   return degrees * (pi/180);
 }
+
+//
+// function rand() {
+//   return Math.random();
+// }
+//
+// Plotly.newPlot('graph', [{
+//   y: [1,2,3].map(rand),
+//   mode: 'lines',
+//   line: {color: '#80CAF6'}
+// }, {
+//   y: [1,2,3].map(rand),
+//   mode: 'lines',
+//   line: {color: '#DF56F1'}
+// }]);
+//
+// var cnt = 0;
+//
+// var interval = setInterval(function() {
+//
+//   Plotly.extendTraces('graph', {
+//     y: [[rand()], [rand()]]
+//   }, [0, 1])
+//
+//   if(++cnt === 100) clearInterval(interval);
+// }, 300);

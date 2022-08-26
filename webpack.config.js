@@ -16,7 +16,7 @@ module.exports = {
     rules: [
       {
         test: /\.js$/,
-        use: 'babel-loader',
+        use: ['babel-loader'],
         exclude: path.resolve(__dirname, './node_modules/')
       },{
         test: /\.(jpe?g|png|gif|svg|tga|glb|babylon|mtl|pcb|pcd|prwm|obj|mat|mp3|ogg)$/i,
