@@ -7,16 +7,18 @@
  *
  */
 
-import {WebGLRenderer, PerspectiveCamera, Scene, Vector3, Clock} from 'three';
+import {WebGLRenderer, PerspectiveCamera, Scene, Vector3, Clock, Quaternion} from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import SeedScene from './objects/Scene.js';
 import {TransformControls} from "three/examples/jsm/controls/TransformControls";
+import {abs, pow2, sqrt} from "three/examples/jsm/nodes/ShaderNode";
 
 const scene = new Scene();
 const camera = new PerspectiveCamera();
 const renderer = new WebGLRenderer({antialias: true});
 
-let socket = new WebSocket("ws://192.168.4.1/ws");
+
+let socket = new WebSocket("ws://192.168.137.186/ws");
 
 socket.onopen = function(e) {
   console.log("[open] Connection established");
@@ -28,22 +30,43 @@ socket.onmessage = function(event) {
   let jsonResponse = JSON.parse(event.data);
   // updateScene(jsonResponse);
   const t = clock.getElapsedTime();
-  console.log((t - prev_time)*1000);
+  console.log(1/((t - prev_time)));
   prev_time = t;
   // console.log(jsonResponse);
   if(character.leftThigh) {
-    // console.log(deg_to_rad(parseFloat(jsonResponse["g-alpha"])))
-    character.leftThigh.rotation.x = deg_to_rad(parseFloat(jsonResponse["g-alpha"]));
-    // character.leftTibia.rotation.x = deg_to_rad(parseFloat(jsonResponse["g-beta"]));
-    // character.rightThigh.rotation.x = deg_to_rad(parseFloat(jsonResponse["d-alpha"]));
-    // character.rightTibia.rotation.x = deg_to_rad(parseFloat(jsonResponse["d-beta"]));
+    let g_alpha = deg_to_rad(parseFloat(jsonResponse["G_ALPHA_Y"]));
+    let g_beta = deg_to_rad(parseFloat(jsonResponse["G_BETA_Y"]));
+    let d_alpha = deg_to_rad(parseFloat(jsonResponse["D_ALPHA_Y"]));
+    let d_beta = deg_to_rad(parseFloat(jsonResponse["D_BETA_Y"]));
+    let spine = deg_to_rad(parseFloat(jsonResponse["SPINE_Y"]))
+
+    // leftThigh
+    character.leftThigh.rotation.x = g_alpha + Math.PI/2;
+    // character.leftThigh.rotation.y = deg_to_rad(parseFloat(jsonResponse["G_ALPHA_Z"]));
+    // character.leftThigh.rotation.z = deg_to_rad(parseFloat(jsonResponse["G_ALPHA_X"]));
+
+    // leftTibia
+    character.leftTibia.rotation.x =  Math.abs(g_beta - g_alpha);
+    // character.leftTibia.rotation.y =  Math.abs(g_beta - g_alpha);
+    // character.leftTibia.rotation.z =  Math.abs(g_beta - g_alpha);
+
+    // rightThigh
+    character.rightThigh.rotation.x = -d_alpha + Math.PI/2;
+    // character.rightThigh.rotation.y = deg_to_rad(parseFloat(jsonResponse["D_ALPHA_Z"]));
+    // character.rightThigh.rotation.z = deg_to_rad(parseFloat(jsonResponse["D_ALPHA_X"]));
+
+    // rightTibia
+    character.rightTibia.rotation.x = Math.abs(d_beta - d_alpha);
+    // character.rightTibia.rotation.y = deg_to_rad(parseFloat(jsonResponse["D_BETA_Z"]));
+    // character.rightTibia.rotation.z = deg_to_rad(parseFloat(jsonResponse["D_BETA_X"]));
+
+    // spine
+    // character.spine.rotation.x = -(spine - Math.PI/2)
+    // character.spine.rotation.y = 0
+    // character.spine.rotation.z = 0
+
   }
-
-  setTimeout(function() {
-    socket.send("1")
-  }, 25);
-
-
+  socket.send("1");
 };
 
 socket.onclose = function(event) {
@@ -64,7 +87,7 @@ let clock = new Clock();
 // scene
 
 // camera
-camera.position.set(-5,0,0);
+camera.position.set(-2.5,3,-2.5);
 camera.lookAt(new Vector3(0,0,0));
 
 // renderer
@@ -183,8 +206,8 @@ window.requestAnimationFrame(onAnimationFrameHandler);
 // resize
 const windowResizeHanlder = () => {
   const { innerHeight, innerWidth } = window;
-  renderer.setSize(innerWidth, innerHeight/3*2);
-  camera.aspect = innerWidth / innerHeight/2*3;
+  renderer.setSize(innerWidth, innerHeight);
+  camera.aspect = innerWidth / innerHeight;
   camera.updateProjectionMatrix();
 };
 windowResizeHanlder();
