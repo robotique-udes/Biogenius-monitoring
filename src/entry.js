@@ -18,7 +18,7 @@ const camera = new PerspectiveCamera();
 const renderer = new WebGLRenderer({antialias: true});
 
 
-let socket = new WebSocket("ws://192.168.137.186/ws");
+let socket = new WebSocket("ws://192.168.137.59/ws");
 
 socket.onopen = function(e) {
   console.log("[open] Connection established");
@@ -38,25 +38,29 @@ socket.onmessage = function(event) {
     let g_beta = deg_to_rad(parseFloat(jsonResponse["G_BETA_Y"]));
     let d_alpha = deg_to_rad(parseFloat(jsonResponse["D_ALPHA_Y"]));
     let d_beta = deg_to_rad(parseFloat(jsonResponse["D_BETA_Y"]));
-    let spine = deg_to_rad(parseFloat(jsonResponse["SPINE_Y"]))
+    let ThighLAngle_Y = -deg_to_rad(parseFloat(jsonResponse["THIGH_L"]));
+    let ThighRAngle_Y = -deg_to_rad(parseFloat(jsonResponse["THIGH_R"]));
+    let TibiaLAngle_Y = -deg_to_rad(parseFloat(jsonResponse["TIBIA_L"]));
+    let TibiaRAngle_Y = -deg_to_rad(parseFloat(jsonResponse["TIBIA_R"]));
+    let back = -deg_to_rad(parseFloat(jsonResponse["BACK"]))
 
     // leftThigh
-    character.leftThigh.rotation.x = g_alpha + Math.PI/2;
+    character.leftThigh.rotation.x = ThighLAngle_Y + Math.PI;
     // character.leftThigh.rotation.y = deg_to_rad(parseFloat(jsonResponse["G_ALPHA_Z"]));
     // character.leftThigh.rotation.z = deg_to_rad(parseFloat(jsonResponse["G_ALPHA_X"]));
 
     // leftTibia
-    character.leftTibia.rotation.x =  Math.abs(g_beta - g_alpha);
+    character.leftTibia.rotation.x = TibiaLAngle_Y - ThighLAngle_Y;
     // character.leftTibia.rotation.y =  Math.abs(g_beta - g_alpha);
     // character.leftTibia.rotation.z =  Math.abs(g_beta - g_alpha);
 
     // rightThigh
-    character.rightThigh.rotation.x = -d_alpha + Math.PI/2;
+    character.rightThigh.rotation.x = ThighRAngle_Y + Math.PI;
     // character.rightThigh.rotation.y = deg_to_rad(parseFloat(jsonResponse["D_ALPHA_Z"]));
     // character.rightThigh.rotation.z = deg_to_rad(parseFloat(jsonResponse["D_ALPHA_X"]));
 
     // rightTibia
-    character.rightTibia.rotation.x = Math.abs(d_beta - d_alpha);
+    character.rightTibia.rotation.x = TibiaRAngle_Y - ThighRAngle_Y;
     // character.rightTibia.rotation.y = deg_to_rad(parseFloat(jsonResponse["D_BETA_Z"]));
     // character.rightTibia.rotation.z = deg_to_rad(parseFloat(jsonResponse["D_BETA_X"]));
 
