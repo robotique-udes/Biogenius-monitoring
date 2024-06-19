@@ -30,7 +30,7 @@ socket.onmessage = function(event) {
   let jsonResponse = JSON.parse(event.data);
   // updateScene(jsonResponse);
   const t = clock.getElapsedTime();
-  //console.log(1/((t - prev_time)));
+  console.log(1/((t - prev_time)));
   prev_time = t;
   // console.log(jsonResponse);
   if(character.leftThigh) {
@@ -65,22 +65,10 @@ socket.onmessage = function(event) {
     // character.rightTibia.rotation.z = deg_to_rad(parseFloat(jsonResponse["D_BETA_X"]));
 
     // spine
-    //  character.spine.rotation.x = -(spine)
+    // character.spine.rotation.x = -(spine - Math.PI/2)
     // character.spine.rotation.y = 0
     // character.spine.rotation.z = 0
 
-    //console.log("Thigh.x:"); console.log(rad_to_deg(character.rightThigh.rotation.x));
-    //console.log("\nThigh.y:"); console.log(rad_to_deg(character.rightThigh.rotation.y));
-    //console.log("\nTibia.x:"); console.log(rad_to_deg(character.rightTibia.rotation.x));  
-
-    character.leftTibia.rotation.x = deg_to_rad(parseFloat(jsonResponse["G_BETA_Y"]));
-    character.leftThigh.rotation.x = Math.PI - deg_to_rad(parseFloat(jsonResponse["G_ALPHA_Y"]));
-    character.rightTibia.rotation.x = deg_to_rad(parseFloat(jsonResponse["D_BETA_Y"]));
-    character.rightThigh.rotation.x = Math.PI - deg_to_rad(parseFloat(jsonResponse["D_ALPHA_Y"]));
-
-    console.log("\nspine.x:"); console.log(rad_to_deg(character.spine.rotation.x));
-
-   // console.log(character.rightTibia.rotation.y);
   }
   socket.send("1");
 };
@@ -236,11 +224,6 @@ document.getElementById("scene").appendChild( renderer.domElement );
 function deg_to_rad(degrees) {
   var pi = Math.PI;
   return degrees * (pi/180);
-}
-
-function rad_to_deg(rad) {
-  var pi = Math.PI;
-  return (rad*180)/pi
 }
 
 //
