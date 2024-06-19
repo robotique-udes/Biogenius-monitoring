@@ -1,3 +1,23 @@
+# Procédure d'installation
+1. Premièrement, il est nécessaire d'avoir installé npm et Node.js
+BIEN COCHÉ LE INSTALL ALL DEPENDANCE
+2. Copier le Package manager dans le format de votre choix (ex: fnm marche bien pour mon cas)
+# Procédure d'utilisation
+1. uploader sur le ESP32 le code contenant la variable "WIFI_ACTIVE"
+2. Partir le wifi "mobile hotspot"
+PROCÉDURE SI LE WIFI N'EST PAS DÉJÀ PAS INSTALLÉ:
+aller dans Network & internet -> Mobile hotspot -> properties -> edit 
+mettre comme nom: BioGenius
+mettre comme mot de passe: biogenius!
+bande passante: 2.4 GHz
+3. Quand tu lances le code de l'exo avec la version wifi, sa se connect automatiquement 
+4. Ouvrir une console dans Biogenius-monitoring et marqué : npm start
+5. Cliquer sur le lien : http://localhost:8081/ (les chiffre 8081 peuvent changer a vérifier)
+6. En théorie tu es sur un lien internet et tu vois le robot 
+7. tu retourne dans Network & internet -> Mobile hotspot -> properties et tu copie les 3 derniers chiffre de ton adresse IP. 
+8. Tu met les 3 derniers chiffres a cette endroit la (ou il y a le 166) dans entry.js: let socket = new WebSocket("ws://192.168.137.166/ws");
+9. tu fais ctrl + s et tu retourne sur la page web
+10. tu bouge l'exo et si rien marche tu appel édouard
 # Three Seed
 
 Three.js starter project boilerplate bundled with Webpack.
