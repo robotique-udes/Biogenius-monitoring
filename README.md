@@ -1,4 +1,4 @@
-# Procédure d'installation (BIEN COCHÉ LE INSTALL ALL DEPENDANCE)
+<img width="956" alt="image" src="https://github.com/robotique-udes/Biogenius-monitoring/assets/122477838/acf3b00f-d94c-4af9-8f44-a1e5bc6cee73"># Procédure d'installation (BIEN COCHÉ LE INSTALL ALL DEPENDANCE)
 1. Premièrement, il est nécessaire d'avoir installé npm et Node.js
 Si ce n'est pas fait OU que cela a déjà été fait, mais que le programme ne marche pas. Veuillez suivre ces étapes.
 Premièrement rendez vous sur le site de Node.js dans la section "Download" (vous pouvez cliquer sur le lien suivant pour vous rendre : https://nodejs.org/en/download/prebuilt-installer ). Ensuite, allez dans la section "Prebuilt Installer" (vous référé au rectangle rouge sur l'image suivante).
@@ -11,8 +11,33 @@ Si vous n'êtres pas certain, vous pouvez vous référer a la section (" system 
 
 2. Copier le Package manager dans le format de votre choix (ex: fnm marche bien pour mon cas)
 Maintenant, aller dans le "package manager", sélectionner votre système d'exploitation et sélectionner le packmanager de votre choix (sur la photo suivante, on voit que la personne a sélectionné Windows et fnm).
-
+<img width="793" alt="image" src="https://github.com/robotique-udes/Biogenius-monitoring/assets/122477838/02c110de-1444-4660-a316-68c7573cc9d5">
+Cliquer sur "Copy to clipboard" et ouvrer un terminal (ex: Windows PowerShell). Coller le texte dans votre terminal et faitre enter. Si tous c'est passé comme prévue, vous devriez avoir un numéro de version quand vous rentrer "npm -v"
+<img width="952" alt="image" src="https://github.com/robotique-udes/Biogenius-monitoring/assets/122477838/3b8651f5-45a8-45f8-83c6-369097d97798">
+Si vous recevez une message du style suivant "The term 'npm' is not recognized as the name of a cmdlet, function, script file, or operable program. Check the
+spelling of the name, or if a path was included, verify that the path is correct and try again.", essayer de refaire les manipulation précédente en changeant de package manager (prenez Chocolatey par exemple).
 # Procédure d'utilisation
+1. Dans le repository "Exo_Control", sélectionner la branche "WifiSimulation".
+2. Assurez vous que la variable "WIFI_ACTIVE est présente dans la fonction setup.
+<img width="689" alt="image" src="https://github.com/robotique-udes/Biogenius-monitoring/assets/122477838/0c80bdc6-642b-4708-b00c-6c4cb9e945f2">
+3. Aller dans votre application réglage et rendez vous dans la section "Mobile hotspot" (Network & internet -> Mobile hotspot)
+<img width="719" alt="image" src="https://github.com/robotique-udes/Biogenius-monitoring/assets/122477838/91c9f4eb-b0f5-47d8-833f-7d3b6860e211">
+5. Si le hotspot BioGenius n'est pas configuré, suivez les 2 prochaines étapes (sinon rendez-vous a l'étape 7)
+6. Toujours dans "Mobile hotspot" cliqué sur "Edit" dans la section "Properties", Rentrez les information suivante (voir l'image en dessous)
+<img width="724" alt="image" src="https://github.com/robotique-udes/Biogenius-monitoring/assets/122477838/52063ef0-648b-4e64-96a2-b22d46a39f9d">
+7. Maintenant configuré, retournez sur Visual Studio Code et uploadez le code dans le ESP32 (dans le repo Exo_Control).
+8. Théoriquement, le wifi se connecte automatiquement quand tu lances le code
+9. Ouvrez une autre fenêtre sur Visual Studio code afin d'ouvrir le repository Biogenius-Monitoring (la branche main).
+10. Ouvrez une console dans ce repository et marquez "npm start" (voir l'image en dessous)
+<img width="947" alt="image" src="https://github.com/robotique-udes/Biogenius-monitoring/assets/122477838/22979983-3ba4-4a5e-adda-5357960d2157">
+11. Plusieurs élément devrais s'afficher dans votre console, vous devez remonter un peu plus haut et localiser la ligne suivante. Une fois cela fait, fait CTRL + click pour aller sur le lien.
+<img width="956" alt="image" src="https://github.com/robotique-udes/Biogenius-monitoring/assets/122477838/d6aa67de-c0bd-4d6c-83c1-e7b1559e5543">
+12. Vous devriez voir le Robot, mais ce dernier ne devrais pas bouger lorsque vous bouger l'exo.
+13. Retournez dans Network & internet -> Mobile hotspot -> properties et copiez les 3 dernier chiffre de l'adresse IP qui s'affichera (192.168.137.XXX)
+14. Retourner dans Visual Studio code sur le repository Biogenius-monitoring et remplacer les 2 ou 3 derniers chiffres de cette ligne par ceux que vous venez tout juste de copier.
+<img width="956" alt="image" src="https://github.com/robotique-udes/Biogenius-monitoring/assets/122477838/45663ed4-c9da-4b40-8316-ae3e2658064d">
+15. Faitez CTRL + S et retounez sur la page internet avec le robot
+16. Déplacez l'exo et regardez si l'animation suit le mouvement.
 1. uploader sur le ESP32 le code contenant la variable "WIFI_ACTIVE"
 2. Partir le wifi "mobile hotspot"
 PROCÉDURE SI LE WIFI N'EST PAS DÉJÀ PAS INSTALLÉ:
