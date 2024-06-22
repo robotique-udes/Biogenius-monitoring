@@ -1,16 +1,17 @@
-# Procédure d'installation
+# Procédure d'installation (BIEN COCHÉ LE INSTALL ALL DEPENDANCE)
 1. Premièrement, il est nécessaire d'avoir installé npm et Node.js
-BIEN COCHÉ LE INSTALL ALL DEPENDANCE
-Si ce n'est pas fait ou que c'est fait, mais que le programme ne marche pas. Veuillez suivre ces étapes.
-premièrement rendez vous sur le site de Node.js dans la section "Download" (vous pouvez cliquer sur le lien suivant pour vous rendre : https://nodejs.org/en/download/package-manager ). Ensuite, allez dans la section "Prebuilt Installer" (vous référé au rectangle rouge sur l'image suivante).
+Si ce n'est pas fait OU que cela a déjà été fait, mais que le programme ne marche pas. Veuillez suivre ces étapes.
+Premièrement rendez vous sur le site de Node.js dans la section "Download" (vous pouvez cliquer sur le lien suivant pour vous rendre : https://nodejs.org/en/download/prebuilt-installer ). Ensuite, allez dans la section "Prebuilt Installer" (vous référé au rectangle rouge sur l'image suivante).
 <img width="902" alt="image" src="https://github.com/robotique-udes/Biogenius-monitoring/assets/122477838/f9c29b9f-b581-4463-9224-85bb6d4a8492">
-Sélectionner votre système d'exploitation et votre architecture (sur l'image, on peux voir que l'utilisateur a sélectionner "windows" sur l'architecture).
+Sélectionner votre système d'exploitation et votre architecture (sur l'image, on peux voir que l'utilisateur a sélectionner "windows" avec une architecture 64 bits).
 <img width="457" alt="image" src="https://github.com/robotique-udes/Biogenius-monitoring/assets/122477838/872b6eb6-a925-42ab-b6f9-da8bd0481c0c">
-Si vous n'êtres pas certain, vous pouvez vous référer a la section (" system -> about ") dans votre application de réglage. Clique sur download Node.js et un fichier va ce téléchargé automatiquement. Ouvrer le et sélectionner les paramètres d'installation par défaut. Cependant, il faut bien coché le bouton suivant, sinon cela risque de ne pas fonctionnner (voir l'image suivante).
+Si vous n'êtres pas certain, vous pouvez vous référer a la section (" system -> about ") dans votre application de réglage. Clique sur "download Node.js" en vert et un fichier va ce télécharger automatiquement. Ouvrez le et sélectionner les paramètres d'installation par défaut. Cependant, il faut bien coché le bouton suivant, sinon cela risque de ne pas fonctionnner (voir l'image suivante).
 
 <img width="424" alt="image" src="https://github.com/robotique-udes/Biogenius-monitoring/assets/122477838/d1daa729-56ba-4d8f-a372-e95121c65da4">
 
-3. Copier le Package manager dans le format de votre choix (ex: fnm marche bien pour mon cas)
+2. Copier le Package manager dans le format de votre choix (ex: fnm marche bien pour mon cas)
+Maintenant, aller dans le "package manager", sélectionner votre système d'exploitation et sélectionner le packmanager de votre choix (sur la photo suivante, on voit que la personne a sélectionné Windows et fnm).
+
 # Procédure d'utilisation
 1. uploader sur le ESP32 le code contenant la variable "WIFI_ACTIVE"
 2. Partir le wifi "mobile hotspot"
