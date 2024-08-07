@@ -18,7 +18,7 @@ const camera = new PerspectiveCamera();
 const renderer = new WebGLRenderer({antialias: true});
 
 
-let socket = new WebSocket("ws://192.168.137.59/ws");
+let socket = new WebSocket("ws://192.168.137.42/ws");
 
 socket.onopen = function(e) {
   console.log("[open] Connection established");
@@ -30,7 +30,7 @@ socket.onmessage = function(event) {
   let jsonResponse = JSON.parse(event.data);
   // updateScene(jsonResponse);
   const t = clock.getElapsedTime();
-  console.log(1/((t - prev_time)));
+  //console.log(1/((t - prev_time)));
   prev_time = t;
   // console.log(jsonResponse);
   if(character.leftThigh) {
@@ -38,11 +38,12 @@ socket.onmessage = function(event) {
     let g_beta = deg_to_rad(parseFloat(jsonResponse["G_BETA_Y"]));
     let d_alpha = deg_to_rad(parseFloat(jsonResponse["D_ALPHA_Y"]));
     let d_beta = deg_to_rad(parseFloat(jsonResponse["D_BETA_Y"]));
+    //IMPORTANT THING START HERE
     let ThighLAngle_Y = -deg_to_rad(parseFloat(jsonResponse["THIGH_L"]));
     let ThighRAngle_Y = -deg_to_rad(parseFloat(jsonResponse["THIGH_R"]));
     let TibiaLAngle_Y = -deg_to_rad(parseFloat(jsonResponse["TIBIA_L"]));
     let TibiaRAngle_Y = -deg_to_rad(parseFloat(jsonResponse["TIBIA_R"]));
-    let back = -deg_to_rad(parseFloat(jsonResponse["BACK"]))
+    let back = -deg_to_rad(parseFloat(jsonResponse["BACK"]));
 
     // leftThigh
     character.leftThigh.rotation.x = ThighLAngle_Y + Math.PI;
@@ -61,6 +62,9 @@ socket.onmessage = function(event) {
 
     // rightTibia
     character.rightTibia.rotation.x = TibiaRAngle_Y - ThighRAngle_Y;
+   
+    // character.leftThigh.position.x = 15 // Écarter la jambe gauche (OFFSET_LEG_X)
+    // character.rightThigh.position.x = -15; // Écarter la jambe droite (-OFFSET_LEG_X)
     // character.rightTibia.rotation.y = deg_to_rad(parseFloat(jsonResponse["D_BETA_Z"]));
     // character.rightTibia.rotation.z = deg_to_rad(parseFloat(jsonResponse["D_BETA_X"]));
 
@@ -69,8 +73,43 @@ socket.onmessage = function(event) {
     // character.spine.rotation.y = 0
     // character.spine.rotation.z = 0
 
+    //////------------CE QUE J'AJOUTE--------------///////
+    //----------------VARIABLE EN X---------------//
+  
+    let ThighLAngle_X = -deg_to_rad(parseFloat(jsonResponse["THIGH_LX"]));
+    let ThighRAngle_X = -deg_to_rad(parseFloat(jsonResponse["THIGH_RX"]));
+    let TibiaLAngle_X = -deg_to_rad(parseFloat(jsonResponse["TIBIA_LX"]));
+    let TibiaRAngle_X = -deg_to_rad(parseFloat(jsonResponse["TIBIA_RX"]));
+
+    // //----------------VARIABLE EN Z---------------//
+    let ThighLAngle_Z = -deg_to_rad(parseFloat(jsonResponse["THIGH_LZ"]));
+    let ThighRAngle_Z = -deg_to_rad(parseFloat(jsonResponse["THIGH_RZ"]));
+    let TibiaLAngle_Z = -deg_to_rad(parseFloat(jsonResponse["TIBIA_LZ"]));
+    let TibiaRAngle_Z = -deg_to_rad(parseFloat(jsonResponse["TIBIA_RZ"]));
+    // //----------------ROTATION EN X---------------//
+    
+    character.leftThigh.rotation.y = ThighLAngle_X - 2;
+    console.log("character.leftThigh.rotation.y: "+ character.leftThigh.rotation.y);
+    // character.leftTibia.rotation.y = TibiaLAngle_X - ThighLAngle_X;
+    console.log("--------------------------");
+    console.log("--------------------------");
+    character.rightThigh.rotation.y = ThighRAngle_X + 0.70;
+    character.rightTibia.rotation.y = TibiaRAngle_X -(Math.PI/2) - 0.64;//NE FAIT PAS DE ROTATION PRÉSENTEMENT
+    console.log("character.rightThigh.rotation.y: "+ character.rightThigh.rotation.y);
+    console.log("character.rightTibia.rotation.y: "+ character.rightTibia.rotation.y);
+    
+
+    //console.log("La taille de variable est de: " + character.rightThigh.rotation.y);
+
+    // //----------------ROTATION EN Z---------------//
+    // character.leftThigh.rotation.z = -ThighLAngle_Z -1.57;
+    // character.rightThigh.rotation.z = ThighRAngle_Z - Math.PI -1.57;
+
+    // character.leftTibia.rotation.z = TibiaLAngle_Z + ThighLAngle_Z;
+    // character.rightTibia.rotation.z = TibiaRAngle_Z + ThighRAngle_Z;
+
   }
-  socket.send("1");
+  socket.send("1"); 
 };
 
 socket.onclose = function(event) {
@@ -91,8 +130,8 @@ let clock = new Clock();
 // scene
 
 // camera
-camera.position.set(-2.5,3,-2.5);
-camera.lookAt(new Vector3(0,0,0));
+camera.position.set(0.7, 2.5, 2);//REMPLACER LA LIGNE DE CODE SUIVANTE PAR CELLE-CI (si vous voulez remettre la vue initiale):// camera.position.set(-2.5,3,-2.5);
+camera.lookAt(new Vector3(0, 0, 0));
 
 // renderer
 renderer.setPixelRatio(window.devicePixelRatio);
@@ -104,8 +143,9 @@ let controls = new TransformControls(camera, renderer.domElement);
 const seedScene = new SeedScene(controls);
 scene.add(seedScene);
 
+
 let character = seedScene.getObjectByName('character');
-console.log(character);
+//console.log(character);
 // render loop
 const onAnimationFrameHandler = (timeStamp) => {
   const t = clock.getElapsedTime();
